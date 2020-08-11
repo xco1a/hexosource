@@ -7,7 +7,7 @@ tags:
 categories: 
 - 前端
 ---
-
+<!-- more -->
 ## 准备事项
 
 安装Nodejs，express，git，mongodb以及各种依赖库的过程略去不提。使用eslint规范代码。

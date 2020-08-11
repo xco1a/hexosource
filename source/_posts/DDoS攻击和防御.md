@@ -6,7 +6,7 @@ tags:
 categories: 
 - 运维
 ---
-
+<!-- more -->
 DDoS攻击分为SYN Flood、UDP Flood、ACK Flood、ICMP Flood、DNS Query Flood、NTP reply Flood、CC攻击等，按攻击方式针对三到七层协议发起，最终达到使目标服务器拒绝服务的目的。
 
 ## SYN Flood

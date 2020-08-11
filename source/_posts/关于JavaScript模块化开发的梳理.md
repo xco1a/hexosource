@@ -6,7 +6,7 @@ tags:
 categories: 
 - 前端
 ---
-
+<!-- more -->
 ## commonJS
 
 &emsp;&emsp;在我对js的理解还停留在只用来做做页面认证和特效的时候，它早已牛逼到支持操作系统层面的操作了。根据学习整理，大致梳理出这么一个故事 —— 虽然js天生的弱类型和半吊子面向对象的特性在逐步向强类型语言靠拢，但js没有模块系统、标准库较少、没有包管理工具的痛点阻碍着js发展出开发大型应用的能力。于是[commonJS](http://www.commonjs.org/)跳出来尝试解决这个问题。[commonJS](http://www.commonjs.org/)的首页上就写着

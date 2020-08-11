@@ -6,7 +6,7 @@ tags:
 categories: 
 - python
 ---
-
+<!-- more -->
 只写过两个简单python脚本。最近碰到的项目都是用python搭建的后端服务，还是学学python吧。。
 
 

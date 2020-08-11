@@ -7,7 +7,7 @@ tags:
 categories: 
 - 前端
 ---
-
+<!-- more -->
 ## 背景
 
 继上次我把umi嵌入vue以来，线上开发转变成了线下开发，一瞬间多了ts，eslint，antd，云构建，cdn发布，一堆vscode插件，以及aone的代码质量、评审工具可以用。说实话还是挺爽的。然而好事总是多磨，由于鲁班平台自带一层接口安全认证和转发机制，当我们在线下开发的时候，没法直接连接口调试，mock等等方案总是没有直连接口调试开发爽。大致情况如下。。
@@ -26,7 +26,7 @@ categories:
 
 
 
-怎么获得呢。。我试过脑残的把我们日常环境的cookie抠出来，在本地开发页面粘贴进去。然后在nginx里配一个可以携带cookie和重写host的转发。这么做确实可以在刚配完的一段时间里用几次，然鹅调几次以后cookie就过期了，还是302，所以基本是不能用。后来经过两位大佬的指点，他们向我介绍了selenium（一个安全专家介绍的python工具）和puppeteer（一个前端专家介绍的node工具）。考虑到我惨不忍睹的python水平，我还是决定用node尝试一下。
+我试过脑残的把我们日常环境的cookie抠出来，在本地开发页面粘贴进去。然后在nginx里配一个可以携带cookie和重写host的转发。这么做确实可以在刚配完的一段时间里用几次，然鹅调几次以后cookie就过期了，还是302，所以基本是不能用。后来经过两位大佬的指点，他们向我介绍了selenium（一个安全专家介绍的python工具）和puppeteer（一个前端专家介绍的node工具）。考虑到我惨不忍睹的python水平，我还是决定用node尝试一下。
 
 
 
@@ -52,19 +52,7 @@ Puppeteer是一个Node库，它提供了高级API来通过[DevTools协议](https
 
 基本是围绕着怎么生成cookie，怎么请求接口进行。
 
-### 方案一（已破产）
-
-一开始设想的方案是，让puppeteer提供cookie，然后让koa拿到cookie以后去发请求，然后把响应还给localhost。
-
-![image.png](http://blog.xcola.top/uploads/puppeteer&koa2.png)
-
-
-
-这个方案我照着做了一下，但是并没有能实现，实际情况是即使我拿到了puppeteer提供的cookie，当我在koa中去发请求的时候鲁班平台依然要求我经过两个登陆认证跳转才会去请求接口，这个过程如果是在浏览器中发生，浏览器会自动跳转成功然后发起请求，但是puppeteer中只会还给我一个302。。
-
-### 方案二（成功了）
-
-于是乎。。我决定让puppeteer去请求。反正这货就是一个货真价实的浏览器，既然如此就让它代替我登陆平台，请求接口，拿到响应以后再用koa响应本地的前端请求。emm，大概就是下面这条线。
+我决定让puppeteer去登陆平台，请求接口，拿到响应以后再用koa响应本地的前端请求。大概就是下面这条线。
 
 ![image.png](http://blog.xcola.top/uploads/puppeteer&koa3.png)
 
@@ -80,7 +68,7 @@ Puppeteer是一个Node库，它提供了高级API来通过[DevTools协议](https
 
 
 
-```
+```javascript
 const Koa = require("koa");
 const log4js = require("koa-log4");
 const logger = log4js.getLogger("app");
@@ -139,7 +127,7 @@ server();
 
 
 
-```
+```javascript
   loginLuban = async () => {
     this.browser = await puppeteer.launch();
     const page = await this.browser.newPage();
@@ -190,7 +178,7 @@ server();
 
 puppeteer只能用来模拟用户操作，无法自如的发送ajax，所以get请求的思路是用page.goto来模拟。
 
-```
+```javascript
   get = async url => {
     const page = await this.browser.newPage();
     let res = "";
@@ -220,7 +208,7 @@ post请求比get复杂一些，因为get可以通过页面跳转，而post无法
 
 
 
-```
+```javascript
   post = async (url, param) => {
     const page = await this.browser.newPage();
     await page.setRequestInterception(true);
@@ -255,7 +243,7 @@ post请求比get复杂一些，因为get可以通过页面跳转，而post无法
 
 附上全部代码。。
 
-```
+```javascript
 const { ACCOUNT, PASSWORD } = require("./config");
 const puppeteer = require("puppeteer");
 const log4js = require("koa-log4");

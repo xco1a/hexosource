@@ -6,7 +6,7 @@ tags:
 categories: 
 - python
 ---
-
+<!-- more -->
 ## 背景
 
 csv一般以逗号分隔字段，这个从sqlite3导出的grafana数据库以 | 分隔字段。。做法是逐条读取csv的数据，拼接成sql语句，通过MySQLdb库执行数据库操作。

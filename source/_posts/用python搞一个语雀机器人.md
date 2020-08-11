@@ -6,7 +6,7 @@ tags:
 categories: 
 - python
 ---
-
+<!-- more -->
 # 用python搞一个语雀机器人
 
 这其实是个愚蠢的事情。因为钉钉机器人是有webhook的，只要在语雀知识库绑定一下就能获取更新推送。<br />![image.png](\uploads\lark.jpg)<br />咳咳。。但是我~~裤子都脱了~~（环境都装上了），总得搞点事情出来吧？
